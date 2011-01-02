@@ -4,7 +4,8 @@
  */
 
 var nedis = require('nedis')
-  , should = require('should');
+  , should = require('should')
+  , net = require('net');
 
 module.exports = {
   'test .version': function(assert){
@@ -21,5 +22,10 @@ module.exports = {
     var server = nedis.createServer(3000, '1.1.1.1');
     server.should.have.property('port', 3000);
     server.should.have.property('host', '1.1.1.1');
+  },
+  
+  'test Server inheritance': function(){
+    var server = nedis.createServer();
+    server.should.be.an.instanceof(net.Server);
   }
 };
