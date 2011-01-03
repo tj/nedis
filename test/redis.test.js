@@ -8,9 +8,16 @@ var nedis = require('nedis')
   , net = require('net');
 
 var server = nedis.createServer().listen('/tmp/nedis')
-  , client = net.createConnection('/tmp/nedis');
+  , client;
 
 module.exports = {
+  setup: function(done){
+    server.on('listening', function(){
+      client = net.createConnection('/tmp/nedis');
+      client.on('connect', done);
+    });
+  },
+  
   'test .version': function(assert){
     nedis.version.should.match(/^\d+\.\d+\.\d+$/);
   },
