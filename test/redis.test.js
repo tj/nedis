@@ -65,6 +65,14 @@ module.exports = {
     });
   },
   
+  'test invalid command': function(done){
+    client.write('*2\r\n$7\r\nINVALID\r\n$3\r\nfoo\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal("-ERR unknown command 'invalid'\r\n");
+      done();
+    });
+  },
+  
   'test GET <key>': function(done){
     client.write('*2\r\n$3\r\nGET\r\n$3\r\nfoo\r\n');
     client.once('data', function(chunk){
