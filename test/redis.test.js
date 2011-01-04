@@ -57,6 +57,14 @@ module.exports = {
     });
   },
 
+  'test invalid multi-bulk': function(done){
+    client.write('*asdf\r\n$3\rGET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal("-ERR Protocol error: number expected after *\r\n");
+      done();
+    });
+  },
+
   'test SET <key> <val>': function(done){
     client.write('*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
     client.once('data', function(chunk){
