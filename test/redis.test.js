@@ -89,6 +89,21 @@ module.exports = {
     });
   },
   
+  'test SET multiple calls': function(done){
+    client.write('*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
+    client.write('*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbaz\r\n');
+    client.write('*3\r\n$3\r\nSET\r\n$3\r\nbar\r\n$3\r\nraz\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal('+OK\r\n+OK\r\n+OK\r\n');
+      client.write('*2\r\n$3\r\nGET\r\n$3\r\nfoo\r\n');
+      client.write('*2\r\n$3\r\nGET\r\n$3\r\nbar\r\n');
+      client.once('data', function(chunk){
+        chunk.toString().should.equal('$3\r\nbaz\r\n$3\r\nraz\r\n');
+        done();
+      })
+    });
+  },
+  
   'test GET invalid args': function(done){
     client.write('*3\r\n$3\r\nGET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
     client.once('data', function(chunk){
