@@ -65,6 +65,14 @@ module.exports = {
     });
   },
   
+  'test missing bulk length LF': function(done){
+    client.write('*3\r\n$3\rGET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal("-ERR missing line feed for bulk length\r\n");
+      done();
+    });
+  },
+  
   after: function(){
     client.destroy();
     server.close();
