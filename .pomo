@@ -1,0 +1,6 @@
+--- 
+- !ruby/object:Pomo::Task 
+  complete: false
+  description: 
+  length: 25
+  name: optimize via .end instead of checking .length in some instances
