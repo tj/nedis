@@ -104,6 +104,14 @@ module.exports = {
     });
   },
   
+  'test KEYS *': function(done){
+    client.write('*2\r\n$4\r\nKEYS\r\n$1\r\n*\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal('*2\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
+      done();
+    });
+  },
+  
   'test GET invalid args': function(done){
     client.write('*3\r\n$3\r\nGET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
     client.once('data', function(chunk){
