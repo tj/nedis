@@ -41,6 +41,14 @@ module.exports = {
     });
   },
   
+  'test lowercase command': function(done){
+    client.write('*2\r\n$3\r\nget\r\n$3\r\nfoo\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal('$-1\r\n');
+      done();
+    });
+  },
+  
   'test SET <key> <val>': function(done){
     client.write('*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
     client.once('data', function(chunk){
