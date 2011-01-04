@@ -33,14 +33,6 @@ module.exports = {
     server.should.be.an.instanceof(net.Server);
   },
   
-  'test GET <key>': function(done){
-    client.write('*2\r\n$3\r\nGET\r\n$3\r\nfoo\r\n');
-    client.once('data', function(chunk){
-      chunk.toString().should.equal('$-1\r\n');
-      done();
-    });
-  },
-  
   'test lowercase command': function(done){
     client.write('*2\r\n$3\r\nget\r\n$3\r\nfoo\r\n');
     client.once('data', function(chunk){
@@ -57,10 +49,26 @@ module.exports = {
     });
   },
 
-  'test invalid multi-bulk': function(done){
+  'test invalid multi-bulk number': function(done){
     client.write('*asdf\r\n$3\rGET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
     client.once('data', function(chunk){
       chunk.toString().should.equal("-ERR Protocol error: number expected after *\r\n");
+      done();
+    });
+  },
+  
+  'test invalid bulk number': function(done){
+    client.write('*2\r\n$ohnoes\r\nGET\r\n$3\r\nfoo\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal("-ERR Protocol error: number expected after $\r\n");
+      done();
+    });
+  },
+  
+  'test GET <key>': function(done){
+    client.write('*2\r\n$3\r\nGET\r\n$3\r\nfoo\r\n');
+    client.once('data', function(chunk){
+      chunk.toString().should.equal('$-1\r\n');
       done();
     });
   },
