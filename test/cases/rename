@@ -25,3 +25,9 @@ $3
 GET
 $6
 foobar
+-------
+*2
+$3
+DEL
+$6
+foobar
