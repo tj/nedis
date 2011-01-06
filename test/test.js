@@ -114,6 +114,8 @@ client.on('connect', function(){
       client.write('*1\r\n$7\r\nFLUSHDB\r\n');
       client.write(input);
       client.once('data', function(reply){
+        // TODO: fram to prevent race-condition
+
         // All good
         if (expected == reply) {
           console.log('\033[32m%dms\033[0m', new Date - start);
