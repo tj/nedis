@@ -119,9 +119,9 @@ client.on('connect', function(){
         } else {
           console.log('\n');
           console.log('  \033[31m%s:\033[0m ', 'expected');
-          console.log(expose(reply));
-          console.log('  \033[31m%s:\033[0m ', 'reply');
           console.log(expose(expected));
+          console.log('  \033[31m%s:\033[0m ', 'got');
+          console.log(expose(reply));
           process.exit(1);
         }
 
