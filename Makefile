@@ -1,8 +1,5 @@
 
 test:
-	@./support/expresso/bin/expresso \
-		--serial \
-		-I support \
-		-I lib
+	@node test/test.js
 
 .PHONY: test
