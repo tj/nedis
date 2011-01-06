@@ -105,12 +105,13 @@ client.on('connect', function(){
     
     // output
     fs.readFile(path + '.out', 'utf8', function(err, str){
-      expected = normalize(str);
+      expected = '+OK\r\n' + normalize(str);
       input && expected && test();
     });
 
     function test(){
       var start = new Date;
+      client.write('*1\r\n$7\r\nFLUSHDB\r\n');
       client.write(input);
       client.once('data', function(reply){
         // All good
