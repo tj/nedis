@@ -90,7 +90,7 @@ function expose(str) {
 client.on('connect', function(){
   (function next(){
     file = files.shift();
-    process.stdout.write('\033[90m...\033[0m \033[33m' + file.toUpperCase() + '\033[0m ');
+    process.stdout.write('\033[90m...\033[0m \033[33m' + file + '\033[0m ');
 
     // Read test case
     var input
