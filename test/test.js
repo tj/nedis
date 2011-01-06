@@ -65,7 +65,9 @@ var pending = files.length;
  */
 
 function normalize(str) {
-  return str.replace(/\n/g, '\r\n');
+  return str
+    .replace(/^\-+\n/gm, '')
+    .replace(/\n/g, '\r\n');
 }
 
 /**
