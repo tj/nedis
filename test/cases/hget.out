@@ -5,3 +5,5 @@ tj
 $11
 tj@test.com
 $-1
++OK
+-ERR Operation against a key holding the wrong kind of value
