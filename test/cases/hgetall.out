@@ -10,3 +10,5 @@ email
 $11
 tj@test.com
 *0
++OK
+-ERR Operation against a key holding the wrong kind of value
