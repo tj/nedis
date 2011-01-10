@@ -33,3 +33,11 @@ $6
 user:0
 $5
 email
+-----------
+*3
+$4
+HGET
+$6
+user:1
+$5
+email
