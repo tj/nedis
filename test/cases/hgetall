@@ -23,3 +23,9 @@ $7
 HGETALL
 $6
 user:0
+-----------
+*2
+$7
+HGETALL
+$5
+empty
