@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+
+/**
+ * Module dependencies.
+ */
+
+try {
+  var nedis = require('nedis');
+} catch (err) {
+  var nedis = require('../');
+}
+
+var server = nedis.createServer().listen();
+console.log('Nedis started on port %d', server.address().port);
