@@ -25,7 +25,18 @@ var options = {
   debug: ~args.indexOf('--debug') || ~args.indexOf('-d')
 };
 
+/**
+ * Port number.
+ */
+
+var port;
+var index;
+
+if (~(index = args.indexOf('--port')) || ~(index = args.indexOf('-p'))) {
+  port = args[index+1];
+}
+
 // Start server
 
-var server = nedis.createServer(options).listen();
+var server = nedis.createServer(options).listen(port);
 console.log('Nedis started on port %d', server.address().port);
