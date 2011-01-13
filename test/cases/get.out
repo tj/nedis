@@ -2,3 +2,5 @@
 $5
 world
 :1
+:1
+-ERR Operation against a key holding the wrong kind of value
