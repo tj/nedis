@@ -11,5 +11,21 @@ try {
   var nedis = require('../');
 }
 
-var server = nedis.createServer().listen();
+/**
+ * Arguments.
+ */
+
+var args = process.argv.slice(2);
+
+/**
+ * Server options.
+ */
+
+var options = {
+  debug: ~args.indexOf('--debug') || ~args.indexOf('-d')
+};
+
+// Start server
+
+var server = nedis.createServer(options).listen();
 console.log('Nedis started on port %d', server.address().port);
