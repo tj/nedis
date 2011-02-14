@@ -1,2 +1,4 @@
 t.js
 *.db
+*.swo
+*.swp
