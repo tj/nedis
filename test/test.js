@@ -42,7 +42,7 @@ server.on('listening', function startTest () {
   client.setEncoding('utf8');
   client.setTimeout(1000);
   client.on('timeout', function(){
-    console.log('timed out');
+    console.error('timed out');
     process.exit(1);
   });
 
@@ -120,15 +120,15 @@ server.on('listening', function startTest () {
 
           // All good
           if (expected == reply) {
-            console.log('\033[32m%dms\033[0m', new Date - start);
+            console.error('\033[32m%dms\033[0m', new Date - start);
             --pending || process.exit(0);
           // Not so good  
           } else {
-            console.log('\n');
-            console.log('  \033[31m%s:\033[0m ', 'expected');
-            console.log(expose(expected));
-            console.log('  \033[31m%s:\033[0m ', 'got');
-            console.log(expose(reply));
+            console.error('\n');
+            console.error('  \033[31m%s:\033[0m ', 'expected');
+            console.error(expose(expected));
+            console.error('  \033[31m%s:\033[0m ', 'got');
+            console.error(expose(reply));
             process.exit(1);
           }
 
