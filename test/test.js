@@ -12,28 +12,15 @@ var nedis = require('../')
  * Server.
  */
 
-var server = nedis.createServer();
-server.on('listening', function startTest () {
+var server = nedis.createServer().listen(port);
+
+server.on('listening', function(){
 
   /**
    * Client.
    */
 
   var client = net.createConnection(port);
-
-  /**
-   * Monkey-patch .once()/
-   *
-   * @param {String} event
-   * @param {String} fn
-   */
-
-  client.once = function(event, fn){
-    client.on(event, function callback(chunk){
-      client.removeListener(event, callback);
-      fn(chunk);
-    });
-  };
 
   /**
    * Timeout support.
@@ -92,7 +79,7 @@ server.on('listening', function startTest () {
   client.on('connect', function(){
     (function next(){
       file = files.shift();
-      process.stdout.write('\033[90m...\033[0m \033[33m' + file + '\033[0m ');
+      process.stdout.write('\033[90m  ' + file + '\033[0m ');
 
       // Read test case
       var input
@@ -139,4 +126,3 @@ server.on('listening', function startTest () {
     })();
   });
 });
-server.listen(port);
