@@ -103,7 +103,7 @@ server.on('listening', function(){
         client.write('*1\r\n$7\r\nFLUSHDB\r\n');
         client.write(input);
         client.once('data', function(reply){
-          // TODO: fram to prevent race-condition
+          // TODO: frame to prevent race-condition
 
           // All good
           if (expected == reply) {
