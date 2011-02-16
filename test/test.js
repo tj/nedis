@@ -12,8 +12,9 @@ var nedis = require('../')
  * Server.
  */
 
-var server = nedis.createServer();
-server.on('listening', function startTest () {
+var server = nedis.createServer().listen(port);
+
+server.on('listening', function(){
 
   /**
    * Client.
@@ -139,4 +140,3 @@ server.on('listening', function startTest () {
     })();
   });
 });
-server.listen(port);
