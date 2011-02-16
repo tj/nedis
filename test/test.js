@@ -23,20 +23,6 @@ server.on('listening', function(){
   var client = net.createConnection(port);
 
   /**
-   * Monkey-patch .once()/
-   *
-   * @param {String} event
-   * @param {String} fn
-   */
-
-  client.once = function(event, fn){
-    client.on(event, function callback(chunk){
-      client.removeListener(event, callback);
-      fn(chunk);
-    });
-  };
-
-  /**
    * Timeout support.
    */
 
