@@ -39,13 +39,7 @@ server.on('listening', function(){
 
   var files = fs.readdirSync(__dirname + '/cases').filter(function(file){
     return !~file.indexOf('.out');
-  });
-
-  /**
-   * Pending tests.
-   */
-
-  var pending = files.length;
+  }).sort();
 
   /**
    * Normalize `str`.
