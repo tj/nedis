@@ -1,6 +1,37 @@
 
 # Nedis
 
+  Nedis is a (partial) redis implementation written with node. Primarily for fun.
+
+## Installation
+
+     $ npm install nedis
+
+## Trying It Out
+
+ Since nedis implements the unified redis prototcol, we can use `redis-cli` with nedis! First start the server:
+
+     $ nedis-server
+
+ Now play with the cli:
+
+     $ redis-cli 
+
+     redis> hmset users:tj email tj@vision-media.ca age 23
+     OK
+     redis> hgetall users:tj
+     1) "email"
+     2) "tj@vision-media.ca"
+     3) "age"
+     4) "23"
+     redis> keys users:*
+     1) "users:tj"
+     redis> 
+
+## Running Tests
+
+    $ make test
+
 ## License 
 
 (The MIT License)
