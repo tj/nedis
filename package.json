@@ -1,8 +1,9 @@
-{   "name": ""
-  , "description": ""
+{   "name": "nedis"
+  , "description": "Redis implementation written with node"
   , "version": "0.0.1"
   , "author": "TJ Holowaychuk <tj@vision-media.ca>"
-  , "keywords": []
-  , "main": "./lib/mylib.js"
+  , "keywords": ["redis"]
+  , "main": "./index.js"
+  , "repository": "git://github.com/visionmedia/nedis"
   , "engines": { "node": ">= 0.2.0" }
 }
