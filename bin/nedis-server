@@ -18,25 +18,61 @@ try {
 var args = process.argv.slice(2);
 
 /**
- * Server options.
+ * Options.
  */
 
-var options = {
-  debug: ~args.indexOf('--debug') || ~args.indexOf('-d')
-};
+var options = {};
 
 /**
- * Port number.
+ * Usage information.
  */
 
-var port;
-var index;
+var usage = [
+    ''
+  , '  Usage: nedis-server [options]'
+  , ''
+  , '  Options:'
+  , ''
+  , '    -p, --port <n>   specify port number'
+  , '    -d, --debug      output debug information'
+  , '    -h, --help       output help information'
+  , ''
+].join('\n');
 
-if (~(index = args.indexOf('--port')) || ~(index = args.indexOf('-p'))) {
-  port = args[index+1];
+/**
+ * Require argument for `flag`.
+ *
+ * @param {String} flag
+ * @return {String}
+ */
+
+function required(flag) {
+  if (args.length) return args.shift();
+  console.error('\n  \033[31m%s requires an argument\033[0m\n', flag);
+  process.exit(1);
+}
+
+// parse arguments
+
+while (args.length) {
+  switch (args.shift()) {
+    case '-h':
+    case '--help':
+      console.log(usage);
+      process.exit(0);
+      break;
+    case '-d':
+    case '--debug':
+      options.debug = true;
+      break;
+    case '-p':
+    case '--port':
+      options.port = required('--port');
+      break;
+  }
 }
 
 // Start server
 
-var server = nedis.createServer(options).listen(port);
+var server = nedis.createServer(options).listen(options.port);
 console.log('Nedis started on port %d', server.address().port);
