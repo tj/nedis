@@ -16,9 +16,9 @@ nedis.createServer().listen();
 // connect server
 
 connect(
+  connect.favicon(),
   connect.cookieParser(),
   connect.session({ store: new RedisStore, secret: 'whatever' }),
-  connect.favicon(),
   function(req, res){
     req.session.hits = req.session.hits || 0;
     var n = req.session.hits++;
