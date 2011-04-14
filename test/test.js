@@ -107,10 +107,11 @@ server.on('listening', function(){
           if (line == expected[0]) {
             expected.shift();
           } else {
-            console.error('  \033[31m%s:\033[0m ', 'expected');
+            console.error('\n\n  \033[31m%s:\033[0m ', 'expected');
             console.error(expose(expected[0]));
             console.error('  \033[31m%s:\033[0m ', 'got');
             console.error(expose(line));
+            console.error();
             process.exit(1);
           }
         })
