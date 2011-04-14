@@ -28,6 +28,10 @@
      1) "users:tj"
      redis> 
 
+## Booting Nedis
+
+    nedis.createServer().listen([port[, host]]);
+
 ## Running Tests
 
     $ make test
