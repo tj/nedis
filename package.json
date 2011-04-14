@@ -5,7 +5,7 @@
   , "keywords": ["redis"]
   , "main": "./index.js"
   , "repository": "git://github.com/visionmedia/nedis"
-  , "bin": { "express": "./bin/nedis-server" }
+  , "bin": { "nedis-server": "./bin/nedis-server" }
   , "contributors": [
     { "name": "Aaron Heckmann", "email": "aaron.heckmann+github@gmail.com" }
   ]
