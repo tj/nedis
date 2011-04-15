@@ -13,15 +13,26 @@ var connect = require('connect')
 
 nedis.createServer().listen();
 
+// session options
+
+var options = {
+    store: new RedisStore
+  , secret: 'whatever'
+  , cookie: {
+    maxAge: 60000
+  }
+};
+
 // connect server
 
 connect(
   connect.favicon(),
   connect.cookieParser(),
-  connect.session({ store: new RedisStore, secret: 'whatever' }),
+  connect.session(options),
   function(req, res){
     req.session.hits = req.session.hits || 0;
-    var n = req.session.hits++;
-    res.end('viewed ' + n + ' times');
+    var n = req.session.hits++
+      , maxAge = req.session.cookie.maxAge;
+    res.end('viewed ' + n + ' times, expires in ' + (maxAge / 1000) + ' seconds');
   }
 ).listen(3000);
