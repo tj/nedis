@@ -36,6 +36,18 @@
 
     $ make test
 
+## Performance
+
+  Really non-scientific results of __GET__ / __SET__:
+  
+    SET
+    nedis: ops 25048, per second 5009.6
+    redis: ops 54850, per second 10970
+
+    GET
+    nedis: ops 32729, per second 6545.8
+    redis: ops 54714, per second 10942.8
+
 ## License 
 
 (The MIT License)
