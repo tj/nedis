@@ -4,7 +4,8 @@
  */
 
 var redis = require('redis')
-  , spawn = require('child_process').spawn;
+  , spawn = require('child_process').spawn
+  , fs = require('fs');
 
 /**
  * Arguments.
@@ -40,6 +41,14 @@ if ('child' == args[0]) {
         ++ops;
         db.get('foo', fn);
       };
+      break;
+    case 'get-large':
+      db.set('file', fs.readFileSync(__filename));
+      fn = function(){
+        ++ops;
+        db.get('file', fn);
+      };
+      break;
   }
 
   fn();
