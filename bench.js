@@ -24,15 +24,27 @@ var seconds = 5
 // or  $ nedis-server
 
 if ('child' == args[0]) {
-  var db = redis.createClient();
+  var db = redis.createClient()
+    , fn;
 
-  (function next(){
-    ++ops;
-    db.set('foo', 'bar', next);
-  })();
+  switch (args[1] || 'set') {
+    case 'set':
+      fn = function(){
+        ++ops;
+        db.set('foo', 'bar', fn);
+      };
+      break;
+    case 'get':
+      db.set('foo', 'bar');
+      fn = function(){
+        ++ops;
+        db.get('foo', fn);
+      };
+  }
 
+  fn();
 } else {
-  var child = spawn('node', [__filename, 'child']);
+  var child = spawn('node', [__filename, 'child'].concat(args));
   child.stdout.setEncoding('ascii');
   child.stdout.on('data', console.log);
 
@@ -45,9 +57,9 @@ if ('child' == args[0]) {
 
 process.on('SIGQUIT', function(){
   console.log();
-  console.log('seconds : %d', seconds);
-  console.log('operations : %d', ops);
-  console.log('ops / second : %d', ops / seconds);
+  console.log('  seconds : %d', seconds);
+  console.log('  operations : %d', ops);
+  console.log('  ops / second : %d', ops / seconds);
   console.log();
   process.exit();
 });
