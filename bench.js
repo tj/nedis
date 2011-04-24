@@ -3,45 +3,49 @@
  * Module dependencies.
  */
 
-var nedis = require('./')
-  , Connection = require('./lib/connection');
+var redis = require('redis')
+  , spawn = require('child_process').spawn;
 
 /**
- * Server to run against.
+ * Arguments.
  */
 
-var server = nedis.createServer();
-server.aof = false;
+var args = process.argv.slice(2);
 
 /**
- * Times to run each benchmark.
+ * Seconds to test.
  */
 
-var times = 100000;
+var seconds = 5
+  , ops = 0
+  , ms = seconds * 1000;
 
-server.on('listening', function(){
-  var client = new Connection(server)
-    , n = times
-    , start = new Date
-    , buf = new Buffer('*2\r\n$3\r\nGET\r\n$3\r\nfoo\r\n');
+// run $ redis-server
+// or  $ nedis-server
 
-  client.parse('*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
-  while (n--) {
-    client.parse(buf);
-  }
-  console.log('GET: %dms', new Date - start);
+if ('child' == args[0]) {
+  var db = redis.createClient();
 
+  (function next(){
+    ++ops;
+    db.set('foo', 'bar', next);
+  })();
 
-  var n = times
-    , start = new Date
-    , buf = new Buffer('*3\r\n$3\r\nSET\r\n$3\r\nfoo\r\n$3\r\nbar\r\n');
+} else {
+  var child = spawn('node', [__filename, 'child']);
+  child.stdout.setEncoding('ascii');
+  child.stdout.on('data', console.log);
 
-  while (n--) {
-    client.parse(buf);
-  }
-  console.log('SET: %dms', new Date - start);
+  setTimeout(function(){
+    child.kill('SIGQUIT');
+  }, ms);
+}
 
-  server.close();
+// report
+
+process.on('SIGQUIT', function(){
+  console.log('seconds : %d', seconds);
+  console.log('operations : %d', ops);
+  console.log('ops / second : %d', ops / seconds);
+  process.exit();
 });
-
-server.listen();
