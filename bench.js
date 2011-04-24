@@ -35,6 +35,12 @@ if ('child' == args[0]) {
         db.set('foo', 'bar', fn);
       };
       break;
+    case 'set-n':
+      fn = function(){
+        ++ops;
+        db.set('foo:' + ops, 'bar', fn);
+      };
+      break;
     case 'set-large':
       var buf = fs.readFileSync(__filename);
       fn = function(){
