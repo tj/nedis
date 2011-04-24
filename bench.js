@@ -44,8 +44,10 @@ if ('child' == args[0]) {
 // report
 
 process.on('SIGQUIT', function(){
+  console.log();
   console.log('seconds : %d', seconds);
   console.log('operations : %d', ops);
   console.log('ops / second : %d', ops / seconds);
+  console.log();
   process.exit();
 });
