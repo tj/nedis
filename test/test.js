@@ -5,14 +5,13 @@
 
 var nedis = require('../')
   , net = require('net')
-  , fs = require('fs')
-  , port = 8888;
+  , fs = require('fs');
 
 /**
  * Server.
  */
 
-var server = nedis.createServer().listen(port);
+var server = nedis.createServer().listen(0);
 
 server.on('listening', function(){
 
@@ -20,7 +19,7 @@ server.on('listening', function(){
    * Client.
    */
 
-  var client = net.createConnection(port);
+  var client = net.createConnection(server.address().port);
 
   /**
    * Timeout support.
